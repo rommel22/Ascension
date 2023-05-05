@@ -136,5 +136,5 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SpecColor: {r: 0.08985229, g: 0.9245283, b: 0.038376607, a: 1}
+    - _SpecColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
   m_BuildTextureStacks: []
