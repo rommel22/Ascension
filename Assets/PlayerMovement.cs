@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
     bool grounded;
 
     public Transform orientation;
+    public Animator animator;
+    public CharacterController controller;
 
     float horizontalInput;
     float verticalInput;
@@ -49,11 +51,17 @@ public class PlayerMovement : MonoBehaviour
         MyInput();
         SpeedControl();
 
+        // Variabel animasi
+        animator.SetBool("isGround", grounded);
+        animator.SetFloat("Speed", Mathf.Sqrt(Mathf.Pow(Input.GetAxisRaw("Vertical"), 2) + Mathf.Pow(Input.GetAxisRaw("Horizontal"), 2)) );
+        
         // handle drag
         if (grounded)
             rb.drag = groundDrag;
         else
             rb.drag = 0;
+        
+        
     }
 
     private void FixedUpdate()
