@@ -51,8 +51,8 @@ public class PlayerMovement : MonoBehaviour
 
         // Variabel animasi
         animator.SetBool("isGround", grounded);
-        animator.SetFloat("Speed", Mathf.Sqrt(Mathf.Pow(Input.GetAxisRaw("Vertical"), 2) + Mathf.Pow(Input.GetAxisRaw("Horizontal"), 2)) );
-        
+        animator.SetFloat("Speed", rb.velocity.magnitude);
+
         // handle drag
         if (grounded)
             rb.drag = groundDrag;
