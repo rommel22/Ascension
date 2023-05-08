@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce;
     public float airMultiplier;
     bool readyToJump;
-    bool jumped;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -40,7 +39,6 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
 
         readyToJump = true;
-        jumped = false;
     }
 
     private void Update()
@@ -60,8 +58,6 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = groundDrag;
         else
             rb.drag = 0;
-        
-        
     }
 
     private void FixedUpdate()
@@ -78,14 +74,11 @@ public class PlayerMovement : MonoBehaviour
         if(Input.GetKey(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
-
             Jump();
-            jumped = true;
         }
 
-        if (Input.GetKeyUp(jumpKey) && jumped) {
+        if (Input.GetKeyUp(jumpKey)) {
             readyToJump = true;
-            jumped = false;
         }
     }
 
