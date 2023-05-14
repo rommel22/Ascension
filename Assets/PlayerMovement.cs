@@ -33,6 +33,10 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody rb;
 
+    public float knockBackForce;
+    public float knockBackTime;
+    private float knockBackCounter;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -46,8 +50,13 @@ public class PlayerMovement : MonoBehaviour
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
-        MyInput();
-        SpeedControl();
+        if (knockBackCounter <= 0){
+            MyInput();
+            SpeedControl();
+        }else{
+            knockBackCounter -= Time.deltaTime;
+        }
+        
 
         // Variabel animasi
         animator.SetBool("isGround", grounded);
@@ -62,7 +71,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePlayer();
+        if (knockBackCounter <= 0){
+            MovePlayer();
+        }else{
+            knockBackCounter -= Time.deltaTime;
+        }
     }
 
     private void MyInput()
@@ -114,5 +127,13 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+    }
+
+    public void Knockback(Vector3 direction)
+    {
+        knockBackCounter = knockBackTime;
+        moveDirection = direction * knockBackForce;
+        moveDirection.y = knockBackForce;
+        rb.AddForce(moveDirection.normalized * knockBackForce * 10f, ForceMode.Force);
     }
 }
