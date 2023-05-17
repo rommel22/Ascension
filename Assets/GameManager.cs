@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public Text healthText;
+    
     // Start is called before the first frame update
     void Start()
     {
