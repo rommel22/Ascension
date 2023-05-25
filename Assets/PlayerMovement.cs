@@ -17,25 +17,34 @@ public class PlayerMovement : MonoBehaviour
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
 
-    [Header("Ground Check")]
+    [Header("Terrain Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
     bool grounded;
 
+    public LayerMask whatIsClimbable;
+
+    [Header("Character Assignment")]
     public Transform orientation;
     public Animator animator;
     public CharacterController controller;
 
     float horizontalInput;
     float verticalInput;
-
     Vector3 moveDirection;
-
     Rigidbody rb;
 
+    [Header("Knockback")]
     public float knockBackForce;
     public float knockBackTime;
     private float knockBackCounter;
+
+    [Header("ClimbDetection")]
+    public float detectionLength;
+    public float sphereCastRadius;
+    public float maxWallLookAngle;
+    private float wallLookAngle;
+    
 
     private void Start()
     {
