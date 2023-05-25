@@ -44,6 +44,10 @@ public class PlayerMovement : MonoBehaviour
     public float sphereCastRadius;
     public float maxWallLookAngle;
     private float wallLookAngle;
+
+    private RaycastHit frontWallHit;
+    private bool wallFront;
+    private bool climbing;
     
 
     private void Start()
@@ -76,6 +80,14 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = groundDrag;
         else
             rb.drag = 0;
+
+        //climbing state
+        if (wallFront && wallLookAngle < maxWallLookAngle){
+            climbing = true;
+        }
+        else{
+            if (climbing) climbing = false;
+        }
     }
 
     private void FixedUpdate()
@@ -106,9 +118,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
+        WallCheck();
         // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
+        
+        if(climbing)
+            rb.velocity = new Vector3(rb.velocity.x, moveSpeed * airMultiplier, rb.velocity.z);
         // on ground
         if(grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
@@ -138,11 +154,14 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
-    public void Knockback(Vector3 direction)
-    {
+    public void Knockback(Vector3 direction){
         knockBackCounter = knockBackTime;
         moveDirection = direction * knockBackForce;
         moveDirection.y = knockBackForce;
         rb.AddForce(moveDirection.normalized * knockBackForce * 10f, ForceMode.Force);
+    }
+    private void WallCheck(){
+        wallFront = Physics.SphereCast(transform.position, sphereCastRadius, moveDirection, out frontWallHit, detectionLength, whatIsClimbable);
+        wallLookAngle = Vector3.Angle(orientation.forward, -frontWallHit.normal);
     }
 }
