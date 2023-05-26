@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
 
 
     [Header("Character Assignment")]
+    public Transform playerObj;
+
     public Transform orientation;
     public Animator animator;
     public CharacterController controller;
@@ -108,7 +110,7 @@ public class PlayerMovement : MonoBehaviour
             readyToJump = true;
         }
 
-        if (wallFront && ((wallLookAngle < maxWallLookAngle) || (90 - wallLookAngle < maxWallLookAngle)))
+        if (wallFront && wallLookAngle < maxWallLookAngle)
             climbing = true;
         else if (climbing)
             climbing = false;
@@ -160,6 +162,6 @@ public class PlayerMovement : MonoBehaviour
     }
     private void WallCheck(){
         wallFront = Physics.SphereCast(transform.position, sphereCastRadius, moveDirection, out frontWallHit, detectionLength, whatIsClimbable);
-        wallLookAngle = Vector3.Angle(orientation.forward, -frontWallHit.normal);
+        wallLookAngle = Vector3.Angle(playerObj.forward, -frontWallHit.normal);
     }
 }
