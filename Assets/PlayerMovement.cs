@@ -22,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask whatIsGround;
     bool grounded;
 
-    public LayerMask whatIsClimbable;
 
     [Header("Character Assignment")]
     public Transform orientation;
@@ -40,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     private float knockBackCounter;
 
     [Header("ClimbDetection")]
+    public LayerMask whatIsClimbable;
     public float detectionLength;
     public float sphereCastRadius;
     public float maxWallLookAngle;
@@ -56,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
         rb.freezeRotation = true;
 
         readyToJump = true;
+        climbing = false;
     }
 
     private void Update()
@@ -80,14 +81,6 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = groundDrag;
         else
             rb.drag = 0;
-
-        //climbing state
-        if (wallFront && wallLookAngle < maxWallLookAngle){
-            climbing = true;
-        }
-        else{
-            if (climbing) climbing = false;
-        }
     }
 
     private void FixedUpdate()
@@ -114,6 +107,11 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyUp(jumpKey)) {
             readyToJump = true;
         }
+
+        if (wallFront && ((wallLookAngle < maxWallLookAngle) || (90 - wallLookAngle < maxWallLookAngle)))
+            climbing = true;
+        else if (climbing)
+            climbing = false;
     }
 
     private void MovePlayer()
