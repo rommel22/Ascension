@@ -157,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
     public void Knockback(Vector3 direction){
         knockBackCounter = knockBackTime;
         moveDirection = direction * knockBackForce;
-        moveDirection.y = knockBackForce;
+        moveDirection.y = knockBackForce * 0.2f;
         rb.AddForce(moveDirection.normalized * knockBackForce * 10f, ForceMode.Force);
     }
     private void WallCheck(){
