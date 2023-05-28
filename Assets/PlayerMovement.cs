@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float jumpForce;
     public float airMultiplier;
+    public float rotationSpeed;
     bool readyToJump;
 
     [Header("Keybinds")]
@@ -50,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
     private RaycastHit frontWallHit;
     private bool wallFront;
     private bool climbing;
-    
+
 
     private void Start()
     {
@@ -122,6 +123,9 @@ public class PlayerMovement : MonoBehaviour
         // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
+        if (moveDirection != Vector3.zero)
+            transform.forward = Vector3.Slerp(transform.forward, moveDirection.normalized, Time.deltaTime * rotationSpeed);
+
         
         if(climbing)
             rb.velocity = new Vector3(rb.velocity.x, moveSpeed * airMultiplier, rb.velocity.z);
@@ -162,6 +166,6 @@ public class PlayerMovement : MonoBehaviour
     }
     private void WallCheck(){
         wallFront = Physics.SphereCast(transform.position, sphereCastRadius, moveDirection, out frontWallHit, detectionLength, whatIsClimbable);
-        wallLookAngle = Vector3.Angle(playerObj.forward, -frontWallHit.normal);
+        wallLookAngle = Vector3.Angle(transform.forward, -frontWallHit.normal);
     }
 }
