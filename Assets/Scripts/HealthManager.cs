@@ -61,9 +61,12 @@ public class HealthManager : MonoBehaviour
                 healthText.text = "Lives:" +  currentHealth + "/" + maxHealth;
                 thePlayer.Knockback(direction);
             }
-            
         }
-        
+    }
+
+    public void InstantKill()
+    {
+        Hurt(maxHealth, new Vector3(0, 0, 0));
     }
 
     public void Respawn(){
