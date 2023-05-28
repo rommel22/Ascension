@@ -71,7 +71,8 @@ public class PlayerMovement : MonoBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
         if (!previousGrounded && grounded && rb.velocity.y < -fallThresholdVelocity) {
-            FindObjectOfType<HealthManager>().Hurt(1, new Vector3(0, 0, 0));
+            int damage = Mathf.FloorToInt(rb.velocity.y * 1.5f / -fallThresholdVelocity); // custom formula :)
+            FindObjectOfType<HealthManager>().Hurt(damage, new Vector3(0, 0, 0));
         }
 
         if (knockBackCounter <= 0){
