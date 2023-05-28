@@ -94,4 +94,9 @@ public class HealthManager : MonoBehaviour
         playerRenderer.enabled = false;
         flashCounter = flashTime;
     }
+
+    public void setRespawnPoint(GameObject newRespawnPoint)
+    {
+        respawnPoint = newRespawnPoint;
+    }
 }
