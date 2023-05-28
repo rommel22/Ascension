@@ -52,14 +52,14 @@ public class HealthManager : MonoBehaviour
     public void Hurt(int damage, Vector3 direction){
         if (invicibleCounter <= 0){
             currentHealth -= damage;
+            invicibleCounter = invicibleTime;
+            flashCounter = flashTime;
+
             if (currentHealth <= 0){
                 Respawn();
             }else{
                 healthText.text = "Lives:" +  currentHealth + "/" + maxHealth;
                 thePlayer.Knockback(direction);
-                invicibleCounter = invicibleTime;
-                playerRenderer.enabled = false;
-                flashCounter = flashTime;
             }
             
         }
@@ -90,9 +90,6 @@ public class HealthManager : MonoBehaviour
         healthText.text = "Lives:" +  currentHealth + "/" + maxHealth;
         retryText.text = "\nRetries:" + ++retries;
 
-        invicibleCounter = invicibleTime;
-        playerRenderer.enabled = false;
-        flashCounter = flashTime;
     }
 
     public void setRespawnPoint(GameObject newRespawnPoint)
