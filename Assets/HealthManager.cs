@@ -47,9 +47,6 @@ public class HealthManager : MonoBehaviour
                 playerRenderer.enabled = true;
             }
         }
-        if (thePlayer.transform.position.y < -5){
-            Respawn();
-        }
     }
 
     public void Hurt(int damage, Vector3 direction){
