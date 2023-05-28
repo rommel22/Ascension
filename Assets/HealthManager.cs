@@ -15,6 +15,7 @@ public class HealthManager : MonoBehaviour
 
     public Text healthText;
     public Text retryText;
+    public GameObject respawnPoint;
 
     public Renderer playerRenderer;
     private float flashCounter;
@@ -22,7 +23,6 @@ public class HealthManager : MonoBehaviour
     // Start is called before the first frame update
 
     private bool isRespawning;
-    private Vector3 respawnPoint;
     private int retries = 0;
     public float restartLength;
 
@@ -31,8 +31,6 @@ public class HealthManager : MonoBehaviour
         currentHealth = maxHealth;
         healthText.text = "Lives:" +  currentHealth + "/" + maxHealth;
         retryText.text = "\nRetries:" + retries;
-        // thePlayer = FindObjectOfType<PlayerMovement>();
-        respawnPoint = thePlayer.transform.position;
     }
 
     // Update is called once per frame
@@ -90,7 +88,7 @@ public class HealthManager : MonoBehaviour
         yield return new WaitForSeconds(restartLength);
         isRespawning = false;
         thePlayer.gameObject.SetActive(true);
-        thePlayer.transform.position = respawnPoint;
+        thePlayer.transform.position = respawnPoint.transform.position;
         currentHealth = maxHealth;
         healthText.text = "Lives:" +  currentHealth + "/" + maxHealth;
         retryText.text = "\nRetries:" + ++retries;
