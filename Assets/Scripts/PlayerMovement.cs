@@ -52,6 +52,9 @@ public class PlayerMovement : MonoBehaviour
     private bool wallFront;
     private bool climbing;
 
+    [Header("FallDamage")]
+    public float fallThresholdVelocity;
+
 
     private void Start()
     {
@@ -64,8 +67,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        // ground check
+        bool previousGrounded = grounded;
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+
+        if (!previousGrounded && grounded && rb.velocity.y < -fallThresholdVelocity) {
+            FindObjectOfType<HealthManager>().Hurt(1, new Vector3(0, 0, 0));
+        }
 
         if (knockBackCounter <= 0){
             MyInput();
