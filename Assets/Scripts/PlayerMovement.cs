@@ -52,6 +52,9 @@ public class PlayerMovement : MonoBehaviour
     private bool wallFront;
     private bool climbing;
 
+    [Header("FallDamage")]
+    public float fallThresholdVelocity;
+
 
     private void Start()
     {
@@ -64,16 +67,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        // ground check
+        bool previousGrounded = grounded;
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
-        if (knockBackCounter <= 0){
+        if (!previousGrounded && grounded && rb.velocity.y < -fallThresholdVelocity)
+        {
+            int damage = Mathf.FloorToInt(rb.velocity.y * 1.5f / -fallThresholdVelocity); // custom formula :)
+            FindObjectOfType<HealthManager>().Hurt(damage, new Vector3(0, 0, 0));
+        }
+
+        if (knockBackCounter <= 0)
+        {
             MyInput();
             SpeedControl();
-        }else{
+        }
+        else
+        {
             knockBackCounter -= Time.deltaTime;
         }
-        
+
 
         // Variabel animasi
         animator.SetBool("isGround", grounded);
@@ -88,9 +100,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (knockBackCounter <= 0){
+        if (knockBackCounter <= 0)
+        {
             MovePlayer();
-        }else{
+        }
+        else
+        {
             knockBackCounter -= Time.deltaTime;
         }
     }
@@ -101,13 +116,14 @@ public class PlayerMovement : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if(Input.GetKey(jumpKey) && readyToJump && grounded)
+        if (Input.GetKey(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
             Jump();
         }
 
-        if (Input.GetKeyUp(jumpKey)) {
+        if (Input.GetKeyUp(jumpKey))
+        {
             readyToJump = true;
         }
 
@@ -126,15 +142,15 @@ public class PlayerMovement : MonoBehaviour
         if (moveDirection != Vector3.zero)
             transform.forward = Vector3.Slerp(transform.forward, moveDirection.normalized, Time.deltaTime * rotationSpeed);
 
-        
-        if(climbing)
+
+        if (climbing)
             rb.velocity = new Vector3(rb.velocity.x, moveSpeed * airMultiplier, rb.velocity.z);
         // on ground
-        if(grounded)
+        if (grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
 
         // in air
-        else if(!grounded)
+        else if (!grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
     }
 
@@ -143,7 +159,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         // limit velocity if needed
-        if(flatVel.magnitude > moveSpeed)
+        if (flatVel.magnitude > moveSpeed)
         {
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
@@ -158,13 +174,15 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
-    public void Knockback(Vector3 direction){
+    public void Knockback(Vector3 direction)
+    {
         knockBackCounter = knockBackTime;
         moveDirection = direction * knockBackForce;
         moveDirection.y = knockBackForce * 0.2f;
         rb.AddForce(moveDirection.normalized * knockBackForce * 10f, ForceMode.Force);
     }
-    private void WallCheck(){
+    private void WallCheck()
+    {
         wallFront = Physics.SphereCast(transform.position, sphereCastRadius, moveDirection, out frontWallHit, detectionLength, whatIsClimbable);
         wallLookAngle = Vector3.Angle(transform.forward, -frontWallHit.normal);
     }
