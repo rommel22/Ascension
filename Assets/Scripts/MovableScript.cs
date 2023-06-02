@@ -29,8 +29,11 @@ public class MovableScript : MonoBehaviour
                 }
                 GetComponent<Rigidbody>().constraints |= RigidbodyConstraints.FreezePositionX;
             }
-
             GetComponent<Rigidbody>().AddForce(actualDirection * pushForce, ForceMode.Impulse);
+        }
+        if (hitter.gameObject.CompareTag("Boxes")){
+            GetComponent<Rigidbody>().constraints |= RigidbodyConstraints.FreezePositionX;
+            GetComponent<Rigidbody>().constraints |= RigidbodyConstraints.FreezePositionZ;
         }
     }
 
@@ -42,8 +45,6 @@ public class MovableScript : MonoBehaviour
             if ((GetComponent<Rigidbody>().constraints & RigidbodyConstraints.FreezePositionZ) != 0){
                 GetComponent<Rigidbody>().constraints &= ~RigidbodyConstraints.FreezePositionZ;
             }
-            
-            
         }
     }
 
