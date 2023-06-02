@@ -17,5 +17,6 @@ public class RespawnManager : MonoBehaviour
 
         hasReachedCheckpoint = true;
         FindObjectOfType<HealthManager>().setRespawnPoint(respawnPointAfterCheckpoint);
+        FindObjectOfType<HealthManager>().currentHealth = FindObjectOfType<HealthManager>().maxHealth;
     }
 }
