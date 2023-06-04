@@ -11,6 +11,12 @@ public class FinishLevelManager : MonoBehaviour
     [Header("Next Scene")]
     public INextScene nextScene;
 
+    public void Start()
+    {
+        fadeOutPanel.gameObject.SetActive(false);
+        finishLevelDisplayPosition.gameObject.SetActive(false);
+    }
+
     public IEnumerator OnLevelCompleted()
     {
         FindObjectOfType<PauseMenu>().canBePaused = false;
@@ -31,6 +37,8 @@ public class FinishLevelManager : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         yield return new WaitForSeconds(3);
+
+        fadeOutPanel.gameObject.SetActive(true);
 
         step = 0.6f * Time.fixedDeltaTime;
         Color prevColor = new Color(0, 0, 0, 0);
