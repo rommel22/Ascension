@@ -5,6 +5,7 @@ using UnityEngine;
 public class LastLevelNextScene : INextScene
 {
     public override void moveToNextScene() {
-        base.moveToScene(0);
+        CurrentLevelTracker.latestLevel = 0;
+        base.moveToScene(CurrentLevelTracker.latestLevel);
     }
 }

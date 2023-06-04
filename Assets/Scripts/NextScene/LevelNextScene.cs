@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class LevelNextScene : INextScene
 {
     public override void moveToNextScene() {
-        base.moveToScene(SceneManager.GetActiveScene().buildIndex + 1);
+        CurrentLevelTracker.latestLevel = SceneManager.GetActiveScene().buildIndex + 1;
+        base.moveToScene(CurrentLevelTracker.latestLevel);
     }
 }
