@@ -23944,15 +23944,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 375007912583085481, guid: 9669c322a24283d419a2b1a418e71f94, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.09254138
+      value: 0.092541374
       objectReference: {fileID: 0}
     - target: {fileID: 375007912583085481, guid: 9669c322a24283d419a2b1a418e71f94, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000004283138
+      value: -0.000000004283136
       objectReference: {fileID: 0}
     - target: {fileID: 375007912583085481, guid: 9669c322a24283d419a2b1a418e71f94, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 3.980756e-10
+      value: 3.9807543e-10
       objectReference: {fileID: 0}
     - target: {fileID: 375007912921819667, guid: 9669c322a24283d419a2b1a418e71f94, type: 3}
       propertyPath: m_LocalPosition.z
@@ -23968,11 +23968,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 375007912921819667, guid: 9669c322a24283d419a2b1a418e71f94, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000017158676
+      value: 0.000000017158676
       objectReference: {fileID: 0}
     - target: {fileID: 375007912921819667, guid: 9669c322a24283d419a2b1a418e71f94, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000012804064
+      value: -0.0000000012804064
       objectReference: {fileID: 0}
     - target: {fileID: 375007913268840629, guid: 9669c322a24283d419a2b1a418e71f94, type: 3}
       propertyPath: m_LocalPosition.z
@@ -54712,7 +54712,6 @@ GameObject:
   - component: {fileID: 1257397662}
   - component: {fileID: 1257397661}
   - component: {fileID: 1257397660}
-  - component: {fileID: 1257397659}
   m_Layer: 5
   m_Name: Quit Button
   m_TagString: Untagged
@@ -54741,18 +54740,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -52}
   m_SizeDelta: {x: 398.8552, y: 59.1}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1257397659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1257397657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67a841625e7c2b146af221b4418eaf79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1257397660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54797,10 +54784,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1257397659}
-        m_TargetAssemblyTypeName: ChangeScene, Assembly-CSharp
-        m_MethodName: moveToScene
-        m_Mode: 3
+      - m_Target: {fileID: 730837066}
+        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+        m_MethodName: BackToMenu
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -84867,7 +84854,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839954689}
-  m_LocalRotation: {x: 0.07441463, y: -0.000000034317353, z: 0.0000000025608133, w: 0.99722743}
+  m_LocalRotation: {x: 0.07441463, y: 0.000000034317353, z: -0.0000000025608133, w: 0.99722743}
   m_LocalPosition: {x: -4, y: -28, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
